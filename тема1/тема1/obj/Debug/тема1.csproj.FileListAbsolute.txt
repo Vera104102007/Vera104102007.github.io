@@ -1,0 +1,5 @@
+H:\практика\тема1\тема1\obj\Debug\тема1.csproj.AssemblyReference.cache
+H:\практика\тема1\тема1\obj\Debug\SeriesCalculation_Variant4.Form1.resources
+H:\практика\тема1\тема1\obj\Debug\тема1.Properties.Resources.resources
+H:\практика\тема1\тема1\obj\Debug\тема1.csproj.GenerateResource.cache
+H:\практика\тема1\тема1\obj\Debug\тема1.csproj.CoreCompileInputs.cache
