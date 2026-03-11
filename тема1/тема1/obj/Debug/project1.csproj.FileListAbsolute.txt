@@ -18,3 +18,13 @@ F:\практика\тема1\Vera104102007.github.io\тема1\тема1\obj\De
 F:\практика\тема1\Vera104102007.github.io\тема1\тема1\obj\Debug\project1.csproj.CoreCompileInputs.cache
 F:\практика\тема1\Vera104102007.github.io\тема1\тема1\obj\Debug\тема1.exe
 F:\практика\тема1\Vera104102007.github.io\тема1\тема1\obj\Debug\тема1.pdb
+F:\практика\Vera104102007.github.io\тема1\тема1\bin\Debug\тема1.exe.config
+F:\практика\Vera104102007.github.io\тема1\тема1\bin\Debug\тема1.exe
+F:\практика\Vera104102007.github.io\тема1\тема1\bin\Debug\тема1.pdb
+F:\практика\Vera104102007.github.io\тема1\тема1\obj\Debug\project1.csproj.AssemblyReference.cache
+F:\практика\Vera104102007.github.io\тема1\тема1\obj\Debug\project1.Form1.resources
+F:\практика\Vera104102007.github.io\тема1\тема1\obj\Debug\тема1.Properties.Resources.resources
+F:\практика\Vera104102007.github.io\тема1\тема1\obj\Debug\project1.csproj.GenerateResource.cache
+F:\практика\Vera104102007.github.io\тема1\тема1\obj\Debug\project1.csproj.CoreCompileInputs.cache
+F:\практика\Vera104102007.github.io\тема1\тема1\obj\Debug\тема1.exe
+F:\практика\Vera104102007.github.io\тема1\тема1\obj\Debug\тема1.pdb
