@@ -11,6 +11,7 @@ namespace project1
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
+        /// hello
         [STAThread]
         static void Main()
         {
