@@ -12,32 +12,48 @@ namespace project1
         }
 
         /// <summary>
-        /// Обработчик KeyPress для textBox1 (ввод x)
+        /// Обработчик KeyPress для textBox1 (ввод x) - разрешен минус
         /// </summary>
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
+            TextBox tb = sender as TextBox;
+
+            // Разрешаем: цифры, Backspace, запятую, точку и минус
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                e.KeyChar != ',' && e.KeyChar != '.')
+                e.KeyChar != ',' && e.KeyChar != '.' && e.KeyChar != '-')
             {
                 e.Handled = true;
             }
 
+            // Замена точки на запятую для корректного Double.Parse
             if (e.KeyChar == '.')
             {
                 e.KeyChar = ',';
             }
 
-            if (e.KeyChar == ',' && (sender as TextBox).Text.Contains(','))
+            // Запрет второй запятой
+            if (e.KeyChar == ',' && tb.Text.Contains(','))
             {
                 e.Handled = true;
+            }
+
+            // Логика для минуса: только в начале и только один
+            if (e.KeyChar == '-')
+            {
+                if (tb.SelectionStart != 0 || tb.Text.Contains('-'))
+                {
+                    e.Handled = true;
+                }
             }
         }
 
         /// <summary>
-        /// Обработчик KeyPress для textBox2 (ввод точности)
+        /// Обработчик KeyPress для textBox2 (ввод точности) - минус запрещен
         /// </summary>
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
+            TextBox tb = sender as TextBox;
+
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
                 e.KeyChar != ',' && e.KeyChar != '.')
             {
@@ -49,79 +65,69 @@ namespace project1
                 e.KeyChar = ',';
             }
 
-            if (e.KeyChar == ',' && (sender as TextBox).Text.Contains(','))
+            if (e.KeyChar == ',' && tb.Text.Contains(','))
             {
                 e.Handled = true;
             }
         }
 
-        /// <summary>
-        /// Обработчик TextChanged для textBox1
-        /// </summary>
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             button1.Enabled = !string.IsNullOrWhiteSpace(textBox1.Text) &&
                               !string.IsNullOrWhiteSpace(textBox2.Text);
         }
 
-        /// <summary>
-        /// Обработчик TextChanged для textBox2
-        /// </summary>
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             button1.Enabled = !string.IsNullOrWhiteSpace(textBox1.Text) &&
                               !string.IsNullOrWhiteSpace(textBox2.Text);
         }
 
-        /// <summary>
-        /// Обработчик Click для button1 - вычисление sin(x) через ряд
-        /// </summary>
         private void button1_Click(object sender, EventArgs e)
         {
-            label6.Text = ""; // Очистка сообщения об ошибке
+            label6.Text = "";
 
             try
             {
-                // Ввод данных
                 double x = Convert.ToDouble(textBox1.Text);
                 double eps = Convert.ToDouble(textBox2.Text);
 
-                // Проверка точности
-                if (eps <= 0)
+                //Проверка диапазона вводимых данных
+                if (x < -100 || x > 100)
                 {
-                    label6.Text = "Ошибка: Точность должна быть положительным числом";
+                    label6.Text = "Ошибка: Введите X в диапазоне от -100 до 100";
                     return;
                 }
 
-                // Эталонное значение для проверки
+                if (eps <= 0 || eps >= 1)
+                {
+                    label6.Text = "Ошибка: Точность должна быть в интервале (0; 1)";
+                    return;
+                }
+
                 double mathResult = Math.Sin(x);
 
-                // Вычисляем сумму в скобках S = 1 - x²/3! + x⁴/5! - x⁶/7! + ...
-                double sumInBrackets = 0.0;    // Сумма в скобках
-                double term = 1.0;              // Первый член в скобках (1)
-                int n = 0;                       // Индекс члена (n=0 для первого члена 1)
-                int sign = 1;                     // Знак (+1 или -1)
-                int count = 0;                     // Счетчик членов в скобках
+                // Сумма ряда Тейлора для sin(x)
+                double sumInBrackets = 0.0;
+                double term = 1.0;
+                int n = 0;
+                int sign = 1;
+                int count = 0;
 
-                // Вычисляем члены ряда в скобках, пока текущий член больше точности
                 do
                 {
-                    // Добавляем текущий член с соответствующим знаком
                     sumInBrackets += sign * term;
                     count++;
 
-                    // Вычисляем следующий член: term(n+1) = term(n) * x² / ((2n+2)*(2n+3))
-                    // Для n=0: term1 = 1 * x² / (2*3) = x²/6 (это x²/3! = x²/6)
-                    // Для n=1: term2 = (x²/6) * x² / (4*5) = x⁴/120 (это x⁴/5!)
+                    // Рекуррентная формула для следующего члена
                     double nextTerm = term * (x * x) / ((2 * n + 2) * (2 * n + 3));
 
                     term = nextTerm;
                     n++;
-                    sign = -sign; // Меняем знак для следующего члена
+                    sign = -sign;
 
                 } while (Math.Abs(term) > eps);
 
-                // Умножаем сумму в скобках на x
                 double seriesResult = x * sumInBrackets;
 
                 // Вывод результатов
@@ -131,7 +137,7 @@ namespace project1
             }
             catch (FormatException)
             {
-                label6.Text = "Ошибка: Используйте запятую для дробных чисел";
+                label6.Text = "Ошибка: Некорректный формат числа";
             }
             catch (Exception ex)
             {
