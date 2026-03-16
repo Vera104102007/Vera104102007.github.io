@@ -13,7 +13,7 @@ namespace тема1
     public partial class Form2 : Form
     {
         private Supabase.Client supabase;
-        private string base64Avatar = ""; // Здесь будет храниться строка фото
+        private string base64Avatar = ""; // Переменная для хранения фото в виде строки
 
         public Form2()
         {
@@ -38,7 +38,7 @@ namespace тема1
             }
         }
 
-        // --- КНОПКА: ВЫБРАТЬ ФОТО (button4) ---
+        // --- 1. ВЫБРАТЬ ФОТО (button4) ---
         private void button4_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
@@ -46,23 +46,24 @@ namespace тема1
                 ofd.Filter = "Изображения|*.jpg;*.jpeg;*.png";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
+                    // Отображаем на форме
                     pictureBox1.Image = Image.FromFile(ofd.FileName);
 
-                    // Переводим картинку в строку (Base64), чтобы сохранить в БД
+                    // Превращаем в строку для базы данных
                     byte[] imageBytes = File.ReadAllBytes(ofd.FileName);
                     base64Avatar = Convert.ToBase64String(imageBytes);
 
-                    MessageBox.Show("Фото успешно загружено в программу!");
+                    MessageBox.Show("Фото успешно выбрано!");
                 }
             }
         }
 
-        // --- КНОПКА: РЕГИСТРАЦИЯ (button1) ---
+        // --- 2. РЕГИСТРАЦИЯ (button1) ---
         private async void button1_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBox1.Text) || string.IsNullOrWhiteSpace(textBox2.Text))
             {
-                MessageBox.Show("Введите логин и пароль!");
+                MessageBox.Show("Введите логин и пароль для регистрации.");
                 return;
             }
 
@@ -76,7 +77,7 @@ namespace тема1
                 };
 
                 await supabase.From<User>().Insert(newUser);
-                MessageBox.Show($"Пользователь {textBox1.Text} успешно зарегистрирован!");
+                MessageBox.Show($"Пользователь {textBox1.Text} успешно добавлен в базу!");
             }
             catch (Exception ex)
             {
@@ -84,28 +85,34 @@ namespace тема1
             }
         }
 
-        // --- КНОПКА: ВОЙТИ (button2) ---
+        // --- 3. ВОЙТИ (button2) ---
         private async void button2_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(textBox1.Text) || string.IsNullOrWhiteSpace(textBox2.Text))
+            {
+                MessageBox.Show("Введите логин и пароль для входа.");
+                return;
+            }
+
             try
             {
-                // Ищем в базе по логину и паролю
+                // Ищем пользователя, у которого совпадают и логин, и пароль
                 var result = await supabase
                     .From<User>()
-                    .Where(x => x.Name == textBox1.Text)
-                    .Where(x => x.Password == textBox2.Text)
+                    .Where(u => u.Name == textBox1.Text)
+                    .Where(u => u.Password == textBox2.Text)
                     .Get();
 
-                var foundUser = result.Models.FirstOrDefault();
+                var user = result.Models.FirstOrDefault();
 
-                if (foundUser != null)
+                if (user != null)
                 {
-                    MessageBox.Show($"Успешный вход! Рады видеть вас, {foundUser.Name}");
+                    MessageBox.Show($"Авторизация успешна! Здравствуйте, {user.Name}.");
 
-                    // Если у пользователя есть аватарка в базе, выводим её
-                    if (!string.IsNullOrEmpty(foundUser.Avatar))
+                    // Если в базе есть фото — загружаем его в pictureBox1
+                    if (!string.IsNullOrEmpty(user.Avatar))
                     {
-                        byte[] imageBytes = Convert.FromBase64String(foundUser.Avatar);
+                        byte[] imageBytes = Convert.FromBase64String(user.Avatar);
                         using (var ms = new MemoryStream(imageBytes))
                         {
                             pictureBox1.Image = Image.FromStream(ms);
@@ -119,20 +126,21 @@ namespace тема1
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка входа: {ex.Message}");
+                MessageBox.Show($"Ошибка при входе: {ex.Message}");
             }
         }
 
-        // --- КНОПКА: ОЧИСТИТЬ (button3) ---
+        // --- 4. ОЧИСТИТЬ (button3) ---
         private void button3_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
             textBox2.Clear();
             pictureBox1.Image = null;
             base64Avatar = "";
-            MessageBox.Show("Поля формы очищены.");
+            MessageBox.Show("Форма успешно очищена.");
         }
 
+        // Класс модели (по твоей таблице на скриншоте)
         [Table("users")]
         class User : BaseModel
         {
@@ -145,7 +153,7 @@ namespace тема1
             [Column("password")]
             public string Password { get; set; }
 
-            [Column("avatar")] // Тот самый столбец, который нужно добавить в БД
+            [Column("avatar")]
             public string Avatar { get; set; }
         }
     }
