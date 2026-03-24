@@ -13,7 +13,7 @@ namespace DictionaryLib
 
         public Slovar() { }
 
-        // Загрузка файла через проводник
+        // Загрузка словаря из файла
         public void LoadFromFile(string path)
         {
             if (!File.Exists(path)) return;
@@ -25,11 +25,19 @@ namespace DictionaryLib
             }
         }
 
-        public void ClearAll() => wordsSet.Clear(); // Для "Создать новый" и "Удалить текущий"
+        public void ClearAll() => wordsSet.Clear(); //
 
+        // Сохранение ВСЕГО словаря
         public void SaveToFile(string path) => File.WriteAllLines(path, wordsSet.ToList(), Encoding.UTF8);
 
-        public void AddWord(string word) => wordsSet.Add(word.Trim());
+        // МЕТОД ДЛЯ СОХРАНЕНИЯ РЕЗУЛЬТАТОВ ПОИСКА
+        public void SaveResults(string path, List<string> results)
+        {
+            if (results != null)
+                File.WriteAllLines(path, results, Encoding.UTF8);
+        }
+
+        public void AddWord(string word) => wordsSet.Add(word.Trim()); //
 
         public void DeleteWord(string word) => wordsSet.Remove(word.Trim());
 
@@ -56,13 +64,13 @@ namespace DictionaryLib
                 .ToList();
         }
 
-        // Вариант 4 (Меню Нечеткий поиск)
+        // Нечеткий поиск по варианту 4
         public List<string> SearchVariant4(int length, string part)
         {
             if (string.IsNullOrEmpty(part)) return new List<string>();
             string p = part.ToLower();
             return wordsSet
-                .Where(w => w.Length == length && (w.ToLower().StartsWith(p) || w.ToLower().EndsWith(p)))
+                .Where(w => w.Length == length && (w.ToLower().Contains(p)))
                 .ToList();
         }
 

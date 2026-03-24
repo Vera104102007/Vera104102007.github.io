@@ -137,12 +137,14 @@
             this.сохранитьРезультатПоискаToolStripMenuItem.Name = "сохранитьРезультатПоискаToolStripMenuItem";
             this.сохранитьРезультатПоискаToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.сохранитьРезультатПоискаToolStripMenuItem.Text = "Сохранить результат поиска";
+            this.сохранитьРезультатПоискаToolStripMenuItem.Click += new System.EventHandler(this.saveSearchResultsToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.справкаToolStripMenuItem.Text = "Справка";
+            this.справкаToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // listBox1
             // 
