@@ -83,26 +83,30 @@
             // открытьToolStripMenuItem
             // 
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.открытьToolStripMenuItem.Text = "Открыть";
+            this.открытьToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // создатьНовыйToolStripMenuItem
             // 
             this.создатьНовыйToolStripMenuItem.Name = "создатьНовыйToolStripMenuItem";
-            this.создатьНовыйToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.создатьНовыйToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.создатьНовыйToolStripMenuItem.Text = "Создать новый";
+            this.создатьНовыйToolStripMenuItem.Click += new System.EventHandler(this.createNewToolStripMenuItem_Click);
             // 
             // сохранитьКакToolStripMenuItem
             // 
             this.сохранитьКакToolStripMenuItem.Name = "сохранитьКакToolStripMenuItem";
-            this.сохранитьКакToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.сохранитьКакToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.сохранитьКакToolStripMenuItem.Text = "Сохранить как";
+            this.сохранитьКакToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // удалитьТекущийToolStripMenuItem
             // 
             this.удалитьТекущийToolStripMenuItem.Name = "удалитьТекущийToolStripMenuItem";
-            this.удалитьТекущийToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.удалитьТекущийToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.удалитьТекущийToolStripMenuItem.Text = "Удалить текущий";
+            this.удалитьТекущийToolStripMenuItem.Click += new System.EventHandler(this.deleteCurrentToolStripMenuItem_Click);
             // 
             // работаСоСлаваремToolStripMenuItem
             // 

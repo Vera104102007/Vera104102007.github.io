@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using DictionaryLib;
@@ -9,76 +8,97 @@ namespace DictionaryApp
 {
     public partial class Form1 : Form
     {
-        private Slovar mySlovar;
-        private string defaultPath = Path.Combine(Application.StartupPath, "russian.txt");
+        private Slovar mySlovar = new Slovar();
 
         public Form1()
         {
             InitializeComponent();
-            LoadDictionary(defaultPath);
-            // Возврат словаря при очистке поля
+            RefreshUI(); // При старте пусто
             textBox1.TextChanged += (s, e) => { if (string.IsNullOrEmpty(textBox1.Text)) RefreshUI(); };
-        }
-
-        private void LoadDictionary(string path)
-        {
-            if (File.Exists(path)) mySlovar = new Slovar(path);
-            RefreshUI();
         }
 
         private void RefreshUI(List<string> dataToShow = null)
         {
-            if (mySlovar == null) return;
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
             var source = dataToShow ?? mySlovar.GetAll();
-            var limited = source.Take(1000).ToArray(); //
-            listBox1.Items.AddRange(limited);
+            listBox1.Items.AddRange(source.Take(1000).ToArray());
             listBox1.EndUpdate();
-            toolStripStatusLabel1.Text = $"В словаре: {mySlovar.Count} | Найдено: {source.Count}";
+            toolStripStatusLabel1.Text = $"В словаре: {mySlovar.Count} | Найдено: {source.Count}"; //
         }
 
-        // --- КНОПКИ ---
+        // --- МЕНЮ "СЛОВАРЬ" ---
 
-        private void button3_Click(object sender, EventArgs e) // Найти (Точный)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e) // Открыть
         {
-            if (mySlovar == null) return;
-            numericLength.Enabled = false; // Блокируем длину
-            RefreshUI(mySlovar.ExactSearch(textBox1.Text));
+            OpenFileDialog ofd = new OpenFileDialog { Filter = "Text Files (*.txt)|*.txt" };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                mySlovar.LoadFromFile(ofd.FileName);
+                RefreshUI();
+            }
         }
 
-        private void button2_Click(object sender, EventArgs e) // Удалить (Исправлено)
+        private void createNewToolStripMenuItem_Click(object sender, EventArgs e) // Создать новый
         {
-            if (mySlovar == null || listBox1.SelectedItem == null) return;
-            mySlovar.DeleteWord(listBox1.SelectedItem.ToString());
+            mySlovar.ClearAll();
             RefreshUI();
         }
 
-        private void button1_Click(object sender, EventArgs e) // Добавить
+        private void deleteCurrentToolStripMenuItem_Click(object sender, EventArgs e) // Удалить текущий
         {
-            if (mySlovar == null || string.IsNullOrWhiteSpace(textBox1.Text)) return;
+            if (MessageBox.Show("Очистить текущий словарь?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                mySlovar.ClearAll();
+                RefreshUI();
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e) // Сохранить как
+        {
+            SaveFileDialog sfd = new SaveFileDialog { Filter = "Text Files (*.txt)|*.txt" };
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                mySlovar.SaveToFile(sfd.FileName);
+            }
+        }
+
+        // --- ПОИСК И КНОПКИ ---
+
+        // Кнопка "Добавить" (Button1)
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox1.Text)) return;
             mySlovar.AddWord(textBox1.Text);
+            RefreshUI(); // Показываем обновленный список
+            textBox1.Clear();
+        }
+
+        private void button3_Click(object sender, EventArgs e) // Найти (Точный)
+        {
+            numericLength.Enabled = false; // Блокируем длину
             RefreshUI(mySlovar.ExactSearch(textBox1.Text));
         }
 
-        // --- МЕНЮ ---
-
-        // Работа со словарем -> Поиск (Левенштейн)
-        private void searchToolStripMenuItem_Click(object sender, EventArgs e)
+        private void searchToolStripMenuItem_Click(object sender, EventArgs e) // Левенштейн
         {
-            if (mySlovar == null || string.IsNullOrWhiteSpace(textBox1.Text)) return;
             numericLength.Enabled = false; // Блокируем длину
-            this.Cursor = Cursors.WaitCursor;
             RefreshUI(mySlovar.LevenshteinSearch(textBox1.Text, 3));
-            this.Cursor = Cursors.Default;
         }
 
-        // Работа со словарем -> Нечеткий поиск (Длина + Часть)
-        private void fuzzySearchToolStripMenuItem_Click(object sender, EventArgs e)
+        private void fuzzySearchToolStripMenuItem_Click(object sender, EventArgs e) // Вариант 4
         {
-            if (mySlovar == null) return;
-            numericLength.Enabled = true; // РАЗБЛОКИРУЕМ длину
+            numericLength.Enabled = true; // РАЗБЛОКИРУЕМ для нечеткого поиска
             RefreshUI(mySlovar.SearchVariant4((int)numericLength.Value, textBox1.Text));
+        }
+
+        private void button2_Click(object sender, EventArgs e) // Удалить выделенное
+        {
+            if (listBox1.SelectedItem != null)
+            {
+                mySlovar.DeleteWord(listBox1.SelectedItem.ToString());
+                RefreshUI();
+            }
         }
     }
 }

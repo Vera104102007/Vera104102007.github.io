@@ -9,39 +9,54 @@ namespace DictionaryLib
     public class Slovar
     {
         private HashSet<string> wordsSet = new HashSet<string>(StringComparer.Ordinal);
-        private string _filePath;
-
         public int Count => wordsSet.Count;
 
-        public Slovar(string path)
-        {
-            _filePath = path;
-            LoadFromFile();
-        }
+        public Slovar() { }
 
-        private void LoadFromFile()
+        // Загрузка файла через проводник
+        public void LoadFromFile(string path)
         {
-            if (!File.Exists(_filePath)) return;
+            if (!File.Exists(path)) return;
             wordsSet.Clear();
-            foreach (var line in File.ReadLines(_filePath, Encoding.UTF8))
+            foreach (var line in File.ReadLines(path, Encoding.UTF8))
             {
                 if (!string.IsNullOrWhiteSpace(line))
                     wordsSet.Add(line.Trim());
             }
         }
 
+        public void ClearAll() => wordsSet.Clear(); // Для "Создать новый" и "Удалить текущий"
+
+        public void SaveToFile(string path) => File.WriteAllLines(path, wordsSet.ToList(), Encoding.UTF8);
+
         public void AddWord(string word) => wordsSet.Add(word.Trim());
+
         public void DeleteWord(string word) => wordsSet.Remove(word.Trim());
+
         public List<string> GetAll() => wordsSet.ToList();
 
-        // 1. Точный поиск (Кнопка "Найти")
+        // Поиск один в один (Кнопка Найти)
         public List<string> ExactSearch(string word)
         {
             if (string.IsNullOrWhiteSpace(word)) return new List<string>();
             return wordsSet.Where(w => w.Equals(word.Trim(), StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        // 2. Метод для нечетного поиска (Вариант 4: Длина + Часть слова)
+        // Поиск Левенштейна (Меню Поиск)
+        public List<string> LevenshteinSearch(string target, int maxDistance)
+        {
+            if (string.IsNullOrEmpty(target)) return new List<string>();
+            string t = target.ToLower();
+            return wordsSet
+                .Where(w => Math.Abs(w.Length - t.Length) <= maxDistance)
+                .Select(w => new { Word = w, Dist = GetDistance(w.ToLower(), t) })
+                .Where(x => x.Dist <= maxDistance)
+                .OrderBy(x => x.Dist)
+                .Select(x => x.Word)
+                .ToList();
+        }
+
+        // Вариант 4 (Меню Нечеткий поиск)
         public List<string> SearchVariant4(int length, string part)
         {
             if (string.IsNullOrEmpty(part)) return new List<string>();
@@ -51,22 +66,7 @@ namespace DictionaryLib
                 .ToList();
         }
 
-        // 3. Поиск Левенштейна с расчетом дистанции
-        public List<string> LevenshteinSearch(string target, int maxDistance)
-        {
-            if (string.IsNullOrEmpty(target)) return new List<string>();
-            string t = target.ToLower();
-
-            return wordsSet
-                .Where(w => Math.Abs(w.Length - t.Length) <= maxDistance)
-                .Select(w => new { Word = w, Dist = GetDistance(w.ToLower(), t) })
-                .Where(x => x.Dist <= maxDistance)
-                .OrderBy(x => x.Dist) // Самые похожие (молоко) будут первыми
-                .Select(x => x.Word)
-                .ToList();
-        }
-
-        public int GetDistance(string s, string t)
+        private int GetDistance(string s, string t)
         {
             int n = s.Length, m = t.Length;
             int[] v0 = new int[m + 1];
