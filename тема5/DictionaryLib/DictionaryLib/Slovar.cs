@@ -8,7 +8,6 @@ namespace DictionaryLib
 {
     public class Slovar
     {
-        // Храним слова с учетом регистра (ним != Ним)
         private HashSet<string> wordsSet = new HashSet<string>(StringComparer.Ordinal);
         private string _filePath;
 
@@ -35,55 +34,55 @@ namespace DictionaryLib
         public void DeleteWord(string word) => wordsSet.Remove(word.Trim());
         public List<string> GetAll() => wordsSet.ToList();
 
-        // 1. ПОИСК ОДИН В ОДИН (Находит все варианты регистра: ним, Ним)
+        // 1. Точный поиск (Кнопка "Найти")
         public List<string> ExactSearch(string word)
         {
             if (string.IsNullOrWhiteSpace(word)) return new List<string>();
-            string target = word.Trim();
-            return wordsSet
-                .Where(w => w.Equals(target, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            return wordsSet.Where(w => w.Equals(word.Trim(), StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        // 2. ПОИСК ПО ЛЕВЕНШТЕЙНУ (Меню "Поиск")
-        public List<string> LevenshteinSearch(string target, int maxDistance)
-        {
-            if (string.IsNullOrEmpty(target)) return new List<string>();
-            string t = target.ToLower();
-
-            // Оптимизация: проверяем только слова похожей длины
-            return wordsSet
-                .Where(w => Math.Abs(w.Length - t.Length) <= maxDistance)
-                .Where(w => CalculateDistance(w.ToLower(), t) <= maxDistance)
-                .ToList();
-        }
-
-        // 3. НЕЧЕТКИЙ ПОИСК (Меню "Нечетный поиск": Длина + Начало/Конец)
+        // 2. Метод для нечетного поиска (Вариант 4: Длина + Часть слова)
         public List<string> SearchVariant4(int length, string part)
         {
             if (string.IsNullOrEmpty(part)) return new List<string>();
             string p = part.ToLower();
             return wordsSet
-                .Where(w => w.Length == length &&
-                           (w.ToLower().StartsWith(p) || w.ToLower().EndsWith(p)))
+                .Where(w => w.Length == length && (w.ToLower().StartsWith(p) || w.ToLower().EndsWith(p)))
                 .ToList();
         }
 
-        private int CalculateDistance(string s, string t)
+        // 3. Поиск Левенштейна с расчетом дистанции
+        public List<string> LevenshteinSearch(string target, int maxDistance)
+        {
+            if (string.IsNullOrEmpty(target)) return new List<string>();
+            string t = target.ToLower();
+
+            return wordsSet
+                .Where(w => Math.Abs(w.Length - t.Length) <= maxDistance)
+                .Select(w => new { Word = w, Dist = GetDistance(w.ToLower(), t) })
+                .Where(x => x.Dist <= maxDistance)
+                .OrderBy(x => x.Dist) // Самые похожие (молоко) будут первыми
+                .Select(x => x.Word)
+                .ToList();
+        }
+
+        public int GetDistance(string s, string t)
         {
             int n = s.Length, m = t.Length;
-            int[,] d = new int[n + 1, m + 1];
-            if (n == 0) return m;
-            if (m == 0) return n;
-            for (int i = 0; i <= n; d[i, 0] = i++) ;
-            for (int j = 0; j <= m; d[0, j] = j++) ;
-            for (int i = 1; i <= n; i++)
-                for (int j = 1; j <= m; j++)
+            int[] v0 = new int[m + 1];
+            int[] v1 = new int[m + 1];
+            for (int i = 0; i <= m; i++) v0[i] = i;
+            for (int i = 0; i < n; i++)
+            {
+                v1[0] = i + 1;
+                for (int j = 0; j < m; j++)
                 {
-                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
-                    d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
+                    int cost = (s[i] == t[j]) ? 0 : 1;
+                    v1[j + 1] = Math.Min(Math.Min(v1[j] + 1, v0[j + 1] + 1), v0[j] + cost);
                 }
-            return d[n, m];
+                Array.Copy(v1, v0, v1.Length);
+            }
+            return v0[m];
         }
     }
 }

@@ -16,7 +16,7 @@ namespace DictionaryApp
         {
             InitializeComponent();
             LoadDictionary(defaultPath);
-            // Авто-сброс при очистке текстового поля
+            // Возврат словаря при очистке поля
             textBox1.TextChanged += (s, e) => { if (string.IsNullOrEmpty(textBox1.Text)) RefreshUI(); };
         }
 
@@ -32,59 +32,53 @@ namespace DictionaryApp
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
             var source = dataToShow ?? mySlovar.GetAll();
-            // Показываем только первые 1000 для скорости
-            var limited = source.Take(1000).ToArray();
+            var limited = source.Take(1000).ToArray(); //
             listBox1.Items.AddRange(limited);
             listBox1.EndUpdate();
-            toolStripStatusLabel1.Text = $"В словаре: {mySlovar.Count} | Показано: {limited.Length}";
+            toolStripStatusLabel1.Text = $"В словаре: {mySlovar.Count} | Найдено: {source.Count}";
         }
 
         // --- КНОПКИ ---
 
-        // Button 3: ОБЫЧНЫЙ ПОИСК (Один в один)
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) // Найти (Точный)
         {
             if (mySlovar == null) return;
             numericLength.Enabled = false; // Блокируем длину
             RefreshUI(mySlovar.ExactSearch(textBox1.Text));
         }
 
-        // Button 1: ДОБАВИТЬ
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (mySlovar == null || string.IsNullOrWhiteSpace(textBox1.Text)) return;
-            mySlovar.AddWord(textBox1.Text);
-            RefreshUI(mySlovar.ExactSearch(textBox1.Text));
-        }
-
-        // Button 2: УДАЛИТЬ
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // Удалить (Исправлено)
         {
             if (mySlovar == null || listBox1.SelectedItem == null) return;
             mySlovar.DeleteWord(listBox1.SelectedItem.ToString());
             RefreshUI();
         }
 
+        private void button1_Click(object sender, EventArgs e) // Добавить
+        {
+            if (mySlovar == null || string.IsNullOrWhiteSpace(textBox1.Text)) return;
+            mySlovar.AddWord(textBox1.Text);
+            RefreshUI(mySlovar.ExactSearch(textBox1.Text));
+        }
+
         // --- МЕНЮ ---
 
-        // Меню "Поиск": ЛЕВЕНШТЕЙН (Расстояние <= 3)
+        // Работа со словарем -> Поиск (Левенштейн)
         private void searchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (mySlovar == null) return;
-            numericLength.Enabled = false;
+            if (mySlovar == null || string.IsNullOrWhiteSpace(textBox1.Text)) return;
+            numericLength.Enabled = false; // Блокируем длину
             this.Cursor = Cursors.WaitCursor;
-            var results = mySlovar.LevenshteinSearch(textBox1.Text, 3);
-            RefreshUI(results);
+            RefreshUI(mySlovar.LevenshteinSearch(textBox1.Text, 3));
             this.Cursor = Cursors.Default;
         }
 
-        // Меню "Нечетный поиск": ВАРИАНТ 4 (Длина + Начало/Конец)
+        // Работа со словарем -> Нечеткий поиск (Длина + Часть)
         private void fuzzySearchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (mySlovar == null) return;
-            numericLength.Enabled = true; // РАЗБЛОКИРУЕМ ПОЛЕ ДЛИНЫ
-            var results = mySlovar.SearchVariant4((int)numericLength.Value, textBox1.Text);
-            RefreshUI(results);
+            numericLength.Enabled = true; // РАЗБЛОКИРУЕМ длину
+            RefreshUI(mySlovar.SearchVariant4((int)numericLength.Value, textBox1.Text));
         }
     }
 }
