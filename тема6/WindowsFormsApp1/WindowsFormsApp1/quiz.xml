@@ -1,0 +1,479 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<theme name="Европа">
+		<level id="1">
+			<q text="В какой стране находится Саграда Фамилия?" src="eu_1_1.jpg">
+				<a right="yes">Испания</a>
+				<a right="no">Италия</a>
+				<a right="no">Франция</a>
+			</q>
+			<q text="Где расположена Эйфелева башня?" src="eu_1_2.jpg">
+				<a right="yes">Франция</a>
+				<a right="no">Германия</a>
+				<a right="no">Англия</a>
+			</q>
+			<q text="В какой стране находится Колизей?" src="eu_1_3.jpg">
+				<a right="yes">Италия</a>
+				<a right="no">Греция</a>
+				<a right="no">Испания</a>
+			</q>
+			<q text="Где находится Биг-Бен?" src="eu_1_4.jpg">
+				<a right="yes">Великобритания</a>
+				<a right="no">Швеция</a>
+				<a right="no">Норвегия</a>
+			</q>
+			<q text="В какой стране находится замок Нойшванштайн?" src="eu_1_5.jpg">
+				<a right="yes">Германия</a>
+				<a right="no">Австрия</a>
+				<a right="no">Чехия</a>
+			</q>
+			<q text="Где находится этот Парфенон?" src="eu_1_6.jpg">
+				<a right="yes">Греция</a>
+				<a right="no">Италия</a>
+				<a right="no">Кипр</a>
+			</q>
+			<q text="В какой стране находятся эти мельницы в Киндердейке?" src="eu_1_7.jpg">
+				<a right="yes">Нидерланды</a>
+				<a right="no">Дания</a>
+				<a right="no">Бельгия</a>
+			</q>
+			<q text="Где расположена Пизанская башня?" src="eu_1_8.jpg">
+				<a right="yes">Италия</a>
+				<a right="no">Испания</a>
+				<a right="no">Франция</a>
+			</q>
+			<q text="В какой стране находится Стоунхендж?" src="eu_1_9.jpg">
+				<a right="yes">Великобритания</a>
+				<a right="no">Ирландия</a>
+				<a right="no">Франция</a>
+			</q>
+			<q text="Где находится Бранденбургские ворота?" src="eu_1_10.jpg">
+				<a right="yes">Германия</a>
+				<a right="no">Австрия</a>
+				<a right="no">Польша</a>
+			</q>
+		</level>
+		<level id="2">
+			<q text="В каком городе находится Пизанская башня?" src="eu_2_1.jpg">
+				<a right="yes">Пиза</a>
+				<a right="no">Рим</a>
+				<a right="no">Милан</a>
+			</q>
+			<q text="Где находится этот Парламент на берегу Дуная?" src="eu_2_2.jpg">
+				<a right="yes">Венгрия</a>
+				<a right="no">Польша</a>
+				<a right="no">Сербия</a>
+			</q>
+			<q text="В какой стране находится Акрополь?" src="eu_2_3.jpg">
+				<a right="yes">Греция</a>
+				<a right="no">Кипр</a>
+				<a right="no">Турция</a>
+			</q>
+			<q text="Где находится Карлов мост?" src="eu_2_4.jpg">
+				<a right="yes">Чехия</a>
+				<a right="no">Словакия</a>
+				<a right="no">Германия</a>
+			</q>
+			<q text="В какой стране расположен этот замок Шамбор?" src="eu_2_5.jpg">
+				<a right="yes">Франция</a>
+				<a right="no">Бельгия</a>
+				<a right="no">Италия</a>
+			</q>
+			<q text="Где находится этот Дворец Пена?" src="eu_2_6.jpg">
+				<a right="yes">Португалия</a>
+				<a right="no">Испания</a>
+				<a right="no">Марокко</a>
+			</q>
+			<q text="В каком городе находится этот собор Св. Стефана?" src="eu_2_7.jpg">
+				<a right="yes">Вена</a>
+				<a right="no">Прага</a>
+				<a right="no">Берлин</a>
+			</q>
+			<q text="Где находится Брюссельская ратуша?" src="eu_2_8.jpg">
+				<a right="yes">Бельгия</a>
+				<a right="no">Нидерланды</a>
+				<a right="no">Люксембург</a>
+			</q>
+			<q text="В какой стране находится этот замок Вартбург?" src="eu_2_9.jpg">
+				<a right="yes">Германия</a>
+				<a right="no">Швейцария</a>
+				<a right="no">Лихтенштейн</a>
+			</q>
+			<q text="Где находится этот памятник 'Русалочка'?" src="eu_2_10.jpg">
+				<a right="yes">Дания</a>
+				<a right="no">Норвегия</a>
+				<a right="no">Швеция</a>
+			</q>
+		</level>
+		<level id="3">
+			<q text="В какой стране находится скала Прекестулен?" src="eu_3_1.jpg">
+				<a right="yes">Норвегия</a>
+				<a right="no">Исландия</a>
+				<a right="no">Шотландия</a>
+			</q>
+			<q text="Где расположен этот замок Тракай?" src="eu_3_2.jpg">
+				<a right="yes">Литва</a>
+				<a right="no">Латвия</a>
+				<a right="no">Эстония</a>
+			</q>
+			<q text="В какой стране находится этот монастырь Метеоры?" src="eu_3_3.jpg">
+				<a right="yes">Греция</a>
+				<a right="no">Болгария</a>
+				<a right="no">Сербия</a>
+			</q>
+			<q text="Где находится этот замок Хоэнзальцбург?" src="eu_3_4.jpg">
+				<a right="yes">Австрия</a>
+				<a right="no">Германия</a>
+				<a right="no">Швейцария</a>
+			</q>
+			<q text="В какой стране находится долина Вахау?" src="eu_3_5.jpg">
+				<a right="yes">Австрия</a>
+				<a right="no">Венгрия</a>
+				<a right="no">Румыния</a>
+			</q>
+			<q text="Где находится этот Собор Александра Невского?" src="eu_3_6.jpg">
+				<a right="yes">Болгария</a>
+				<a right="no">Греция</a>
+				<a right="no">Сербия</a>
+			</q>
+			<q text="В какой стране находится мост Мостар?" src="eu_3_7.jpg">
+				<a right="yes">Босния и Герцеговина</a>
+				<a right="no">Хорватия</a>
+				<a right="no">Черногория</a>
+			</q>
+			<q text="Где находится эта скала Афродиты?" src="eu_3_8.jpg">
+				<a right="yes">Кипр</a>
+				<a right="no">Греция</a>
+				<a right="no">Мальта</a>
+			</q>
+			<q text="В какой стране находится этот замок Корвинов?" src="eu_3_9.jpg">
+				<a right="yes">Румыния</a>
+				<a right="no">Молдова</a>
+				<a right="no">Болгария</a>
+			</q>
+			<q text="Где находится это озеро Блед?" src="eu_3_10.jpg">
+				<a right="yes">Словения</a>
+				<a right="no">Словакия</a>
+				<a right="no">Австрия</a>
+			</q>
+		</level>
+	</theme>
+
+	<theme name="Азия">
+		<level id="1">
+			<q text="В какой стране находится Великая стена?" src="as_1_1.jpg">
+				<a right="yes">Китай</a>
+				<a right="no">Монголия</a>
+				<a right="no">Вьетнам</a>
+			</q>
+			<q text="Где находится Тадж-Махал?" src="as_1_2.jpg">
+				<a right="yes">Индия</a>
+				<a right="no">Пакистан</a>
+				<a right="no">Иран</a>
+			</q>
+			<q text="В какой стране находится гора Фудзияма?" src="as_1_3.jpg">
+				<a right="yes">Япония</a>
+				<a right="no">Китай</a>
+				<a right="no">Корея</a>
+			</q>
+			<q text="Где находится этот Бурдж-Халифа?" src="as_1_4.jpg">
+				<a right="yes">ОАЭ</a>
+				<a right="no">Катар</a>
+				<a right="no">Саудовская Аравия</a>
+			</q>
+			<q text="В какой стране расположен этот храм Ват Арун?" src="as_1_5.jpg">
+				<a right="yes">Таиланд</a>
+				<a right="no">Вьетнам</a>
+				<a right="no">Камбоджа</a>
+			</q>
+			<q text="Где находится этот Мерлайон?" src="as_1_6.jpg">
+				<a right="yes">Сингапур</a>
+				<a right="no">Малайзия</a>
+				<a right="no">Китай</a>
+			</q>
+			<q text="В какой стране находится этот залив Халонг?" src="as_1_7.jpg">
+				<a right="yes">Вьетнам</a>
+				<a right="no">Филиппины</a>
+				<a right="no">Таиланд</a>
+			</q>
+			<q text="Где находится этот Золотой храм?" src="as_1_8.jpg">
+				<a right="yes">Индия</a>
+				<a right="no">Непал</a>
+				<a right="no">Шри-Ланка</a>
+			</q>
+			<q text="В какой стране находится эта башня Сеула?" src="as_1_9.jpg">
+				<a right="yes">Южная Корея</a>
+				<a right="no">Япония</a>
+				<a right="no">Китай</a>
+			</q>
+			<q text="Где расположен этот Терракотовый воин?" src="as_1_10.jpg">
+				<a right="yes">Китай</a>
+				<a right="no">Япония</a>
+				<a right="no">Монголия</a>
+			</q>
+		</level>
+		<level id="2">
+			<q text="Где находятся эти башни Петронас?" src="as_2_1.jpg">
+				<a right="yes">Малайзия</a>
+				<a right="no">Индонезия</a>
+				<a right="no">Сингапур</a>
+			</q>
+			<q text="В какой стране находится храмовый комплекс Ангкор-Ват?" src="as_2_2.jpg">
+				<a right="yes">Камбоджа</a>
+				<a right="no">Таиланд</a>
+				<a right="no">Лаос</a>
+			</q>
+			<q text="Где находится этот Храм Неба?" src="as_2_3.jpg">
+				<a right="yes">Китай</a>
+				<a right="no">Корея</a>
+				<a right="no">Вьетнам</a>
+			</q>
+			<q text="В какой стране находится этот Боробудур?" src="as_2_4.jpg">
+				<a right="yes">Индонезия</a>
+				<a right="no">Филиппины</a>
+				<a right="no">Малайзия</a>
+			</q>
+			<q text="Где расположен этот Дворец Гёнбоккун?" src="as_2_5.jpg">
+				<a right="yes">Южная Корея</a>
+				<a right="no">Китай</a>
+				<a right="no">Япония</a>
+			</q>
+			<q text="В какой стране находится Башня Свободы (Азади)?" src="as_2_6.jpg">
+				<a right="yes">Иран</a>
+				<a right="no">Ирак</a>
+				<a right="no">Турция</a>
+			</q>
+			<q text="Где находится этот монастырь Потала?" src="as_2_7.jpg">
+				<a right="yes">Китай (Тибет)</a>
+				<a right="no">Индия</a>
+				<a right="no">Непал</a>
+			</q>
+			<q text="В какой стране находится эта статуя Лежащего Будды?" src="as_2_8.jpg">
+				<a right="yes">Таиланд</a>
+				<a right="no">Мьянма</a>
+				<a right="no">Камбоджа</a>
+			</q>
+			<q text="Где находится эта пагода Шведагон?" src="as_2_9.jpg">
+				<a right="yes">Мьянма</a>
+				<a right="no">Таиланд</a>
+				<a right="no">Вьетнам</a>
+			</q>
+			<q text="В какой стране находится это плато Сигирия?" src="as_2_10.jpg">
+				<a right="yes">Шри-Ланка</a>
+				<a right="no">Индия</a>
+				<a right="no">Мальдивы</a>
+			</q>
+		</level>
+		<level id="3">
+			<q text="Где находится монастырь 'Гнездо тигра'?" src="as_3_1.jpg">
+				<a right="yes">Бутан</a>
+				<a right="no">Непал</a>
+				<a right="no">Тибет</a>
+			</q>
+			<q text="В какой стране находится древний город Петра?" src="as_3_2.jpg">
+				<a right="yes">Иордания</a>
+				<a right="no">Израиль</a>
+				<a right="no">Египет</a>
+			</q>
+			<q text="Где находится этот храмовый комплекс Прамбанан?" src="as_3_3.jpg">
+				<a right="yes">Индонезия</a>
+				<a right="no">Вьетнам</a>
+				<a right="no">Индия</a>
+			</q>
+			<q text="В какой стране расположен этот мост Кавадзу-Нанадару?" src="as_3_4.jpg">
+				<a right="yes">Япония</a>
+				<a right="no">Китай</a>
+				<a right="no">Корея</a>
+			</q>
+			<q text="Где находится эта пещера Шондонг?" src="as_3_5.jpg">
+				<a right="yes">Вьетнам</a>
+				<a right="no">Таиланд</a>
+				<a right="no">Лаос</a>
+			</q>
+			<q text="В какой стране находится священная гора Кайлас?" src="as_3_6.jpg">
+				<a right="yes">Китай</a>
+				<a right="no">Индия</a>
+				<a right="no">Непал</a>
+			</q>
+			<q text="Где находится этот город Ичхан-Кала?" src="as_3_7.jpg">
+				<a right="yes">Узбекистан</a>
+				<a right="no">Туркменистан</a>
+				<a right="no">Казахстан</a>
+			</q>
+			<q text="В какой стране находится этот Храм Гроба Господня?" src="as_3_8.jpg">
+				<a right="yes">Израиль</a>
+				<a right="no">Иордания</a>
+				<a right="no">Ливан</a>
+			</q>
+			<q text="Где находится эта 'Шоколадные холмы'?" src="as_3_9.jpg">
+				<a right="yes">Филиппины</a>
+				<a right="no">Индонезия</a>
+				<a right="no">Вьетнам</a>
+			</q>
+			<q text="В какой стране находится эта Долина Цветов?" src="as_3_10.jpg">
+				<a right="yes">Индия</a>
+				<a right="no">Китай</a>
+				<a right="no">Япония</a>
+			</q>
+		</level>
+	</theme>
+
+	<theme name="Америка">
+		<level id="1">
+			<q text="Где находится Статуя Свободы?" src="am_1_1.jpg">
+				<a right="yes">США</a>
+				<a right="no">Канада</a>
+				<a right="no">Франция</a>
+			</q>
+			<q text="В какой стране находится Чичен-Ица?" src="am_1_2.jpg">
+				<a right="yes">Мексика</a>
+				<a right="no">Перу</a>
+				<a right="no">Бразилия</a>
+			</q>
+			<q text="Где расположен этот мост 'Золотые ворота'?" src="am_1_3.jpg">
+				<a right="yes">США</a>
+				<a right="no">Канада</a>
+				<a right="no">Мексика</a>
+			</q>
+			<q text="В какой стране находится гора Рашмор?" src="am_1_4.jpg">
+				<a right="yes">США</a>
+				<a right="no">Канада</a>
+				<a right="no">Аргентина</a>
+			</q>
+			<q text="Где находится этот Ниагарский водопад?" src="am_1_5.jpg">
+				<a right="yes">США/Канада</a>
+				<a right="no">Мексика</a>
+				<a right="no">Бразилия</a>
+			</q>
+			<q text="В какой стране находится пирамида Солнца?" src="am_1_6.jpg">
+				<a right="yes">Мексика</a>
+				<a right="no">Гватемала</a>
+				<a right="no">Перу</a>
+			</q>
+			<q text="Где находится этот небоскреб Эмпайр-стейт-билдинг?" src="am_1_7.jpg">
+				<a right="yes">США</a>
+				<a right="no">Канада</a>
+				<a right="no">Сингапур</a>
+			</q>
+			<q text="В какой стране находится этот Си-Эн Тауэр?" src="am_1_8.jpg">
+				<a right="yes">Канада</a>
+				<a right="no">США</a>
+				<a right="no">Австралия</a>
+			</q>
+			<q text="Где расположены эти Панамские шлюзы?" src="am_1_9.jpg">
+				<a right="yes">Панама</a>
+				<a right="no">Колумбия</a>
+				<a right="no">Коста-Рика</a>
+			</q>
+			<q text="В какой стране находится эта гора Корковаду?" src="am_1_10.jpg">
+				<a right="yes">Бразилия</a>
+				<a right="no">Чили</a>
+				<a right="no">Аргентина</a>
+			</q>
+		</level>
+		<level id="2">
+			<q text="Где находится Мачу-Пикчу?" src="am_2_1.jpg">
+				<a right="yes">Перу</a>
+				<a right="no">Чили</a>
+				<a right="no">Боливия</a>
+			</q>
+			<q text="В каком городе находится статуя Христа-Искупителя?" src="am_2_2.jpg">
+				<a right="yes">Рио-де-Жанейро</a>
+				<a right="no">Сан-Паулу</a>
+				<a right="no">Буэнос-Айрес</a>
+			</q>
+			<q text="Где находится этот Большой каньон?" src="am_2_3.jpg">
+				<a right="yes">США</a>
+				<a right="no">Мексика</a>
+				<a right="no">Канада</a>
+			</q>
+			<q text="В какой стране находится этот водопад Игуасу?" src="am_2_4.jpg">
+				<a right="yes">Бразилия/Аргентина</a>
+				<a right="no">Венесуэла</a>
+				<a right="no">Перу</a>
+			</q>
+			<q text="Где находится этот Остров Пасхи?" src="am_2_5.jpg">
+				<a right="yes">Чили</a>
+				<a right="no">Перу</a>
+				<a right="no">Эквадор</a>
+			</q>
+			<q text="В какой стране находится эта пустыня Атакама?" src="am_2_6.jpg">
+				<a right="yes">Чили</a>
+				<a right="no">Мексика</a>
+				<a right="no">Боливия</a>
+			</q>
+			<q text="Где расположен этот город Картахена?" src="am_2_7.jpg">
+				<a right="yes">Колумбия</a>
+				<a right="no">Венесуэла</a>
+				<a right="no">Мексика</a>
+			</q>
+			<q text="В какой стране находится эта Гаванская набережная?" src="am_2_8.jpg">
+				<a right="yes">Куба</a>
+				<a right="no">Ямайка</a>
+				<a right="no">Доминикана</a>
+			</q>
+			<q text="Где находится этот Голливудский знак?" src="am_2_9.jpg">
+				<a right="yes">США</a>
+				<a right="no">Канада</a>
+				<a right="no">Мексика</a>
+			</q>
+			<q text="В какой стране находится этот собор в Бразилиа?" src="am_2_10.jpg">
+				<a right="yes">Бразилия</a>
+				<a right="no">Аргентина</a>
+				<a right="no">Португалия</a>
+			</q>
+		</level>
+		<level id="3">
+			<q text="В какой стране находится этот ледник Перито-Морено?" src="am_3_1.jpg">
+				<a right="yes">Аргентина</a>
+				<a right="no">Канада</a>
+				<a right="no">Норвегия</a>
+			</q>
+			<q text="Где находится Национальный парк Банф?" src="am_3_2.jpg">
+				<a right="yes">Канада</a>
+				<a right="no">США</a>
+				<a right="no">Аляска</a>
+			</q>
+			<q text="В какой стране находится этот водопад Анхель?" src="am_3_3.jpg">
+				<a right="yes">Венесуэла</a>
+				<a right="no">Бразилия</a>
+				<a right="no">Гайана</a>
+			</q>
+			<q text="Где расположен этот солончак Уюни?" src="am_3_4.jpg">
+				<a right="yes">Боливия</a>
+				<a right="no">Чили</a>
+				<a right="no">Аргентина</a>
+			</q>
+			<q text="В какой стране находится этот парк Йеллоустоун?" src="am_3_5.jpg">
+				<a right="yes">США</a>
+				<a right="no">Канада</a>
+				<a right="no">Россия</a>
+			</q>
+			<q text="Где находится эта 'Линии Наски'?" src="am_3_6.jpg">
+				<a right="yes">Перу</a>
+				<a right="no">Чили</a>
+				<a right="no">Мексика</a>
+			</q>
+			<q text="В какой стране находится гора Аконкагуа?" src="am_3_7.jpg">
+				<a right="yes">Аргентина</a>
+				<a right="no">Чили</a>
+				<a right="no">Перу</a>
+			</q>
+			<q text="Где расположен этот Национальный парк Торрес-дель-Пайне?" src="am_3_8.jpg">
+				<a right="yes">Чили</a>
+				<a right="no">Аргентина</a>
+				<a right="no">Уругвай</a>
+			</q>
+			<q text="В какой стране находится город-крепость Квебек?" src="am_3_9.jpg">
+				<a right="yes">Канада</a>
+				<a right="no">Франция</a>
+				<a right="no">США</a>
+			</q>
+			<q text="Где находится этот Национальный парк Глейшер?" src="am_3_10.jpg">
+				<a right="yes">США</a>
+				<a right="no">Канада</a>
+				<a right="no">Норвегия</a>
+			</q>
+		</level>
+	</theme>
+</root>
