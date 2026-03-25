@@ -29,7 +29,6 @@ namespace DictionaryApp
             toolStripStatusLabel1.Text = $"В словаре: {mySlovar.Count} | Найдено: {source.Count}"; //
         }
 
-        // --- КНОПКИ ---
 
         private void button1_Click(object sender, EventArgs e) // Добавить
         {
