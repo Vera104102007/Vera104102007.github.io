@@ -1,0 +1,12 @@
+Какой браузер вы используете?
+5
+Google Chrome
+45
+Mozilla Firefox
+25
+Opera
+15
+Safari
+10
+Internet Explorer
+5

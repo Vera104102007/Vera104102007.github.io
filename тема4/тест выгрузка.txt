@@ -1,0 +1,12 @@
+Популярность браузеров
+5
+Google
+2
+Internet Explorer
+2
+Другой
+1
+Mozilla Firefox
+1
+Opera
+1
