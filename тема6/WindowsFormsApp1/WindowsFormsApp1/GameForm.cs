@@ -9,6 +9,8 @@ namespace WindowsFormsApp1
 {
     public partial class GameForm : Form
     {
+        private const string PathToQuiz = "../../../quiz.xml";
+
         string theme;
         int level;
         List<Question> allQuestions = new List<Question>();
@@ -45,9 +47,10 @@ namespace WindowsFormsApp1
 
         private void LoadXmlData()
         {
-            if (!System.IO.File.Exists("quiz.xml")) return;
+            var path = Path.Combine(Directory.GetCurrentDirectory(), PathToQuiz);
+            if (!File.Exists(path)) return;
 
-            using (XmlReader xr = XmlReader.Create("quiz.xml"))
+            using (XmlReader xr = XmlReader.Create(path))
             {
                 while (xr.Read())
                 {
