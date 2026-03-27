@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
@@ -9,7 +10,8 @@ namespace WindowsFormsApp1
 {
     public partial class GameForm : Form
     {
-        private const string PathToQuiz = "../../../quiz.xml";
+        // Укажите здесь правильное имя вашего XML файла
+        private const string PathToQuiz = "quiz.xml";
 
         string theme;
         int level;
@@ -24,6 +26,7 @@ namespace WindowsFormsApp1
             InitializeComponent();
             this.theme = theme;
             this.level = level;
+
             LoadXmlData();
 
             // Выбираем 5 случайных вопросов
@@ -41,13 +44,15 @@ namespace WindowsFormsApp1
             else
             {
                 MessageBox.Show("Вопросы для этого уровня не найдены в XML!");
-                this.Close();
+                // Используем BeginInvoke, чтобы закрыть форму после её полной загрузки
+                this.Load += (s, e) => this.Close();
             }
         }
 
         private void LoadXmlData()
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), PathToQuiz);
+            // Путь к XML в папке запуска
+            var path = Path.Combine(Application.StartupPath, PathToQuiz);
             if (!File.Exists(path)) return;
 
             using (XmlReader xr = XmlReader.Create(path))
@@ -67,15 +72,22 @@ namespace WindowsFormsApp1
                                         Question q = new Question();
                                         q.Text = xr.GetAttribute("text");
                                         q.Image = xr.GetAttribute("src");
+                                        q.Answers = new List<string>();
 
                                         int ansIdx = 0;
-                                        while (xr.Read() && !(xr.Name == "q" && xr.NodeType == XmlNodeType.EndElement))
+                                        // Читаем ответы внутри вопроса
+                                        using (XmlReader inner = xr.ReadSubtree())
                                         {
-                                            if (xr.Name == "a")
+                                            while (inner.Read())
                                             {
-                                                if (xr.GetAttribute("right") == "yes") q.RightIndex = ansIdx;
-                                                q.Answers.Add(xr.ReadElementContentAsString());
-                                                ansIdx++;
+                                                if (inner.Name == "a" && inner.NodeType == XmlNodeType.Element)
+                                                {
+                                                    if (inner.GetAttribute("right") == "yes")
+                                                        q.RightIndex = ansIdx;
+
+                                                    q.Answers.Add(inner.ReadElementContentAsString());
+                                                    ansIdx++;
+                                                }
                                             }
                                         }
                                         allQuestions.Add(q);
@@ -90,33 +102,82 @@ namespace WindowsFormsApp1
 
         private void ShowQuestion()
         {
+            // 1. Получаем текущий вопрос из списка сессии
             var q = sessionQuestions[currentQ];
+
+            // 2. Настройка текстовых меток (Текст вопроса и счетчик)
             label1.Text = q.Text;
             label2.Text = $"Вопрос {currentQ + 1} из {sessionQuestions.Count}";
 
-            string imgPath = System.IO.Path.Combine(Application.StartupPath, "images", q.Image);
-            if (System.IO.File.Exists(imgPath))
-                pictureBox1.Image = Image.FromFile(imgPath);
+            // 3. Работа с изображением (Безопасный режим)
+            // Сначала очищаем старое изображение из памяти
+            if (pictureBox1.Image != null)
+            {
+                pictureBox1.Image.Dispose();
+                pictureBox1.Image = null;
+            }
 
-            radioButton1.Text = q.Answers.Count > 0 ? q.Answers[0] : "";
-            radioButton2.Text = q.Answers.Count > 1 ? q.Answers[1] : "";
-            radioButton3.Text = q.Answers.Count > 2 ? q.Answers[2] : "";
+            // Проверяем, указано ли имя файла в данных вопроса
+            if (!string.IsNullOrWhiteSpace(q.Image))
+            {
+                // Формируем пути для поиска (3 шага назад для .NET 9 и папка рядом с .exe)
+                string projectImagesPath = Path.Combine(Application.StartupPath, @"..\..\..\images", q.Image);
+                string localImagesPath = Path.Combine(Application.StartupPath, "images", q.Image);
 
-            radioButton1.Checked = radioButton2.Checked = radioButton3.Checked = false;
+                if (File.Exists(projectImagesPath))
+                {
+                    pictureBox1.Image = Image.FromFile(projectImagesPath);
+                    pictureBox1.Visible = true;
+                }
+                else if (File.Exists(localImagesPath))
+                {
+                    pictureBox1.Image = Image.FromFile(localImagesPath);
+                    pictureBox1.Visible = true;
+                }
+                else
+                {
+                    // Если файл прописан в XML, но физически отсутствует — просто скрываем PictureBox
+                    pictureBox1.Visible = false;
+                }
+            }
+            else
+            {
+                // Если в XML поле src пустое (как в твоих новых вопросах) — скрываем PictureBox
+                pictureBox1.Visible = false;
+            }
+
+            // 4. Настройка вариантов ответов (RadioButtons)
+            // Берем текст ответов напрямую из списка q.Answers, который ты заполнила в админке
+            radioButton1.Text = q.Answers.Count > 0 ? q.Answers[0] : "Вариант не загружен";
+            radioButton2.Text = q.Answers.Count > 1 ? q.Answers[1] : "Вариант не загружен";
+            radioButton3.Text = q.Answers.Count > 2 ? q.Answers[2] : "Вариант не загружен";
+
+            // Сбрасываем выделение с кнопок для нового вопроса
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
         }
 
         private void button1_Click(object sender, EventArgs e) // Кнопка "Готово"
         {
             int selected = -1;
             if (radioButton1.Checked) selected = 0;
-            if (radioButton2.Checked) selected = 1;
-            if (radioButton3.Checked) selected = 2;
+            else if (radioButton2.Checked) selected = 1;
+            else if (radioButton3.Checked) selected = 2;
+
+            if (selected == -1)
+            {
+                MessageBox.Show("Выберите вариант ответа!");
+                return;
+            }
 
             if (selected == sessionQuestions[currentQ].RightIndex) correctAnswers++;
 
             currentQ++;
-            if (currentQ < sessionQuestions.Count) ShowQuestion();
-            else EndGame();
+            if (currentQ < sessionQuestions.Count)
+                ShowQuestion();
+            else
+                EndGame();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -129,13 +190,23 @@ namespace WindowsFormsApp1
         private void EndGame()
         {
             timer1.Stop();
-            int finalScore = (correctAnswers * 100) / sessionQuestions.Count;
+            int finalScore = (sessionQuestions.Count > 0) ? (correctAnswers * 100) / sessionQuestions.Count : 0;
             MessageBox.Show($"Игра окончена! Баллы: {finalScore}");
 
+            // Запись результатов (убедитесь, что эти статические свойства есть в MainForm)
             if (level == 1) MainForm.ScoreLevel1 = finalScore;
             if (level == 2) MainForm.ScoreLevel2 = finalScore;
 
             this.Close();
         }
+    }
+
+    // Класс вопроса (если он у вас в отдельном файле, этот блок можно удалить)
+    public class Question
+    {
+        public string Text { get; set; }
+        public string Image { get; set; }
+        public List<string> Answers { get; set; } = new List<string>();
+        public int RightIndex { get; set; }
     }
 }

@@ -43,6 +43,9 @@
             button1 = new Button();
             button2 = new Button();
             openFileDialog1 = new OpenFileDialog();
+            textBox3 = new TextBox();
+            textBox4 = new TextBox();
+            textBox5 = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
@@ -52,6 +55,7 @@
             // 
             // comboBox1
             // 
+            comboBox1.BackColor = Color.Plum;
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(7, 31);
             comboBox1.Margin = new Padding(4);
@@ -105,6 +109,9 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(textBox5);
+            groupBox4.Controls.Add(textBox4);
+            groupBox4.Controls.Add(textBox3);
             groupBox4.Controls.Add(radioButton3);
             groupBox4.Controls.Add(radioButton2);
             groupBox4.Controls.Add(radioButton1);
@@ -118,34 +125,31 @@
             // radioButton3
             // 
             radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(18, 112);
+            radioButton3.Location = new Point(18, 117);
             radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(112, 20);
+            radioButton3.Size = new Size(14, 13);
             radioButton3.TabIndex = 2;
             radioButton3.TabStop = true;
-            radioButton3.Text = "radioButton3";
             radioButton3.UseVisualStyleBackColor = true;
             // 
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(18, 72);
+            radioButton2.Location = new Point(18, 77);
             radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(112, 20);
+            radioButton2.Size = new Size(14, 13);
             radioButton2.TabIndex = 1;
             radioButton2.TabStop = true;
-            radioButton2.Text = "radioButton2";
             radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton1
             // 
             radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(18, 33);
+            radioButton1.Location = new Point(18, 38);
             radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(112, 20);
+            radioButton1.Size = new Size(14, 13);
             radioButton1.TabIndex = 0;
             radioButton1.TabStop = true;
-            radioButton1.Text = "radioButton1";
             radioButton1.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -166,32 +170,56 @@
             // 
             // button1
             // 
+            button1.BackColor = Color.Pink;
             button1.Location = new Point(28, 535);
             button1.Name = "button1";
             button1.Size = new Size(166, 52);
             button1.TabIndex = 8;
             button1.Text = "Выбрать фото";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // button2
             // 
+            button2.BackColor = Color.Pink;
             button2.Location = new Point(242, 535);
             button2.Name = "button2";
             button2.Size = new Size(183, 52);
             button2.TabIndex = 9;
             button2.Text = "Добавить вопрос в XML";
-            button2.UseVisualStyleBackColor = true;
+            button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(49, 32);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(321, 22);
+            textBox3.TabIndex = 3;
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(49, 73);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(321, 22);
+            textBox4.TabIndex = 4;
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(49, 115);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(321, 22);
+            textBox5.TabIndex = 5;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(9F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Plum;
             ClientSize = new Size(461, 614);
             Controls.Add(button2);
             Controls.Add(button1);
@@ -234,5 +262,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private TextBox textBox5;
+        private TextBox textBox4;
+        private TextBox textBox3;
     }
 }

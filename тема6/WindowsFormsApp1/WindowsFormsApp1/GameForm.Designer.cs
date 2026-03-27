@@ -45,9 +45,10 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(27, 102);
+            pictureBox1.Location = new Point(27, 84);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(324, 134);
+            pictureBox1.Size = new Size(324, 236);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -56,7 +57,7 @@
             groupBox1.Controls.Add(radioButton3);
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
-            groupBox1.Location = new Point(27, 259);
+            groupBox1.Location = new Point(27, 338);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(324, 135);
             groupBox1.TabIndex = 1;
@@ -125,12 +126,13 @@
             // 
             // button1
             // 
-            button1.Location = new Point(27, 418);
+            button1.BackColor = Color.Thistle;
+            button1.Location = new Point(27, 497);
             button1.Name = "button1";
             button1.Size = new Size(324, 50);
             button1.TabIndex = 5;
             button1.Text = "Готово";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // timer1
@@ -141,6 +143,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Lavender;
             ClientSize = new Size(402, 619);
             Controls.Add(button1);
             Controls.Add(label3);

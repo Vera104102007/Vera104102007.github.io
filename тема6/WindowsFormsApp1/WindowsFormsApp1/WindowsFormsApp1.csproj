@@ -21,4 +21,10 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="quiz.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

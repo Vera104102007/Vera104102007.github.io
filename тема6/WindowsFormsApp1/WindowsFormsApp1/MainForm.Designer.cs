@@ -48,6 +48,7 @@
             // 
             // comboBox1
             // 
+            comboBox1.BackColor = SystemColors.GradientInactiveCaption;
             comboBox1.FormattingEnabled = true;
             comboBox1.Items.AddRange(new object[] { "Европа", "Азия", "Америка" });
             comboBox1.Location = new Point(48, 59);
@@ -58,50 +59,55 @@
             // 
             // button1
             // 
+            button1.BackColor = SystemColors.GradientInactiveCaption;
             button1.Location = new Point(48, 110);
             button1.Name = "button1";
             button1.Size = new Size(180, 44);
             button1.TabIndex = 2;
             button1.Text = "Пройти первый уровень";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // button2
             // 
+            button2.BackColor = SystemColors.GradientInactiveCaption;
             button2.Enabled = false;
             button2.Location = new Point(48, 173);
             button2.Name = "button2";
             button2.Size = new Size(180, 46);
             button2.TabIndex = 3;
             button2.Text = "Пройти второй уровень";
-            button2.UseVisualStyleBackColor = true;
+            button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
             // button3
             // 
+            button3.BackColor = SystemColors.GradientInactiveCaption;
             button3.Enabled = false;
             button3.Location = new Point(48, 241);
             button3.Name = "button3";
             button3.Size = new Size(180, 46);
             button3.TabIndex = 4;
             button3.Text = "Пройти третий уровень";
-            button3.UseVisualStyleBackColor = true;
+            button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
             // 
             // button4
             // 
+            button4.BackColor = SystemColors.GradientInactiveCaption;
             button4.Location = new Point(48, 313);
             button4.Name = "button4";
             button4.Size = new Size(180, 82);
             button4.TabIndex = 5;
             button4.Text = "Панель администратора";
-            button4.UseVisualStyleBackColor = true;
+            button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(9F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(274, 538);
             Controls.Add(button4);
             Controls.Add(button3);
