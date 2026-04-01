@@ -18,6 +18,8 @@ namespace WindowsFormsApp1
         private bool _isDrawing = false;
         private bool _isResizing = false; // Флаг режима изменения размера
         private SelectionFrame _selectionFrame = new SelectionFrame(); // Экземпляр помощника
+        private Point _lastMousePos;      // Для вычисления дельты перемещения
+        private MarkerPosition _activeMarker = MarkerPosition.None;
 
         public MainForm()
         {
@@ -193,26 +195,32 @@ namespace WindowsFormsApp1
         // Обработка рисования в PictureBox
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (toolStripButton3.Checked) // Режим Указателя
+            _lastMousePos = e.Location;
+
+            if (toolStripButton3.Checked) // Режим "Указатель"
             {
-                // 1. Проверяем, не нажали ли мы на маркер (например, нижний правый) текущей выделенной фигуры
-                if (_selectedFigure != null && _selectionFrame.IsBottomRightMarker(e.Location, _selectedFigure.Bounds))
+                if (_selectedFigure != null)
                 {
-                    _isResizing = true;
+                    // Проверяем, попал ли курсор в какой-либо из 4-х маркеров
+                    _activeMarker = _selectionFrame.GetHitMarker(e.Location, _selectedFigure.Bounds);
+
+                    if (_activeMarker != MarkerPosition.None)
+                    {
+                        _isResizing = true;
+                        return; // Начинаем трансформацию, не меняя выделение
+                    }
                 }
-                else
-                {
-                    // 2. Если не по маркеру, ищем фигуру под курсором для выделения
-                    _selectedFigure = _figures.FindLast(f => f.Bounds.Contains(e.Location));
-                    _isResizing = false;
-                }
+
+                // Если в маркер не попали, ищем фигуру под курсором для выделения
+                _selectedFigure = _figures.FindLast(f => f.Bounds.Contains(e.Location));
+                _isResizing = false;
             }
-            else // Режим рисования
+            else // Режим рисования новой фигуры
             {
                 SaveState(_history);
                 _redoHistory.Clear();
                 _selectedFigure = CreateFigureFromSelection();
-                _selectedFigure.Bounds = new Rectangle(e.X, e.Y, 0, 0);
+                _selectedFigure.Bounds = new Rectangle(e.Location, new Size(0, 0));
                 _selectedFigure.StrokeConfig = new Stroke { Color = _currentStroke.Color, Width = _currentStroke.Width };
                 _figures.Add(_selectedFigure);
                 _isDrawing = true;
@@ -222,31 +230,57 @@ namespace WindowsFormsApp1
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isResizing && _selectedFigure != null)
+            if (_selectedFigure == null) return;
+
+            if (_isResizing) // ТРАНСФОРМАЦИЯ ЗА МАРКЕРЫ
             {
-                // Растягивание: меняем ширину и высоту относительно верхнего левого угла
-                int newWidth = e.X - _selectedFigure.Bounds.X;
-                int newHeight = e.Y - _selectedFigure.Bounds.Y;
+                Rectangle b = _selectedFigure.Bounds;
+                int x1 = b.Left;
+                int y1 = b.Top;
+                int x2 = b.Right;
+                int y2 = b.Bottom;
 
-                // Ограничение, чтобы фигура не схлопнулась в 0
-                if (newWidth < 5) newWidth = 5;
-                if (newHeight < 5) newHeight = 5;
+                // В зависимости от маркера меняем соответствующую координату
+                switch (_activeMarker)
+                {
+                    case MarkerPosition.TopLeft:
+                        x1 = e.X; y1 = e.Y;
+                        break;
+                    case MarkerPosition.TopRight:
+                        x2 = e.X; y1 = e.Y;
+                        break;
+                    case MarkerPosition.BottomLeft:
+                        x1 = e.X; y2 = e.Y;
+                        break;
+                    case MarkerPosition.BottomRight:
+                        x2 = e.X; y2 = e.Y;
+                        break;
+                }
 
-                _selectedFigure.Bounds = new Rectangle(
-                    _selectedFigure.Bounds.X,
-                    _selectedFigure.Bounds.Y,
-                    newWidth,
-                    newHeight
-                );
+                // Нормализация: позволяем тянуть углы в любом направлении без ошибок
+                int newX = Math.Min(x1, x2);
+                int newY = Math.Min(y1, y2);
+                int newWidth = Math.Max(5, Math.Abs(x1 - x2));
+                int newHeight = Math.Max(5, Math.Abs(y1 - y2));
+
+                _selectedFigure.Bounds = new Rectangle(newX, newY, newWidth, newHeight);
                 pictureBox1.Invalidate();
             }
-            else if (_isDrawing && _selectedFigure != null)
+            else if (_isDrawing) // РИСОВАНИЕ НОВОЙ ФИГУРЫ
             {
-                // Обычная логика рисования новой фигуры
-                _selectedFigure.Bounds = new Rectangle(
-                    _selectedFigure.Bounds.X, _selectedFigure.Bounds.Y,
-                    e.X - _selectedFigure.Bounds.X, e.Y - _selectedFigure.Bounds.Y
-                );
+                int x = Math.Min(_lastMousePos.X, e.X);
+                int y = Math.Min(_lastMousePos.Y, e.Y);
+                int w = Math.Abs(_lastMousePos.X - e.X);
+                int h = Math.Abs(_lastMousePos.Y - e.Y);
+                _selectedFigure.Bounds = new Rectangle(x, y, w, h);
+                pictureBox1.Invalidate();
+            }
+            else if (toolStripButton3.Checked && e.Button == MouseButtons.Left) // ПЕРЕМЕЩЕНИЕ
+            {
+                int dx = e.X - _lastMousePos.X;
+                int dy = e.Y - _lastMousePos.Y;
+                _selectedFigure.Move(dx, dy);
+                _lastMousePos = e.Location;
                 pictureBox1.Invalidate();
             }
         }
@@ -255,6 +289,7 @@ namespace WindowsFormsApp1
         {
             _isDrawing = false;
             _isResizing = false;
+            _activeMarker = MarkerPosition.None;
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -272,6 +307,8 @@ namespace WindowsFormsApp1
             }
         }
 
+
+
         private Figure CreateFigureFromSelection()
         {
             switch (toolStripComboBox1.Text)
@@ -283,6 +320,35 @@ namespace WindowsFormsApp1
             }
         }
 
-        
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (_selectedFigure != null && toolStripButton3.Checked)
+            {
+                // Если зажат Shift — шаг 1, иначе — 5
+                int step = (keyData.HasFlag(Keys.Shift)) ? 1 : 5;
+
+                switch (keyData & Keys.KeyCode)
+                {
+                    case Keys.Left:
+                        _selectedFigure.Move(-step, 0);
+                        pictureBox1.Invalidate();
+                        return true;
+                    case Keys.Right:
+                        _selectedFigure.Move(step, 0);
+                        pictureBox1.Invalidate();
+                        return true;
+                    case Keys.Up:
+                        _selectedFigure.Move(0, -step);
+                        pictureBox1.Invalidate();
+                        return true;
+                    case Keys.Down:
+                        _selectedFigure.Move(0, step);
+                        pictureBox1.Invalidate();
+                        return true;
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
     }
 }
