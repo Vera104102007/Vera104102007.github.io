@@ -8,6 +8,7 @@ namespace Name
     public struct GameResult
     {
         public string Login;
+        //hello
         public int Score;
         public int SeqScore;
         public DateTime Date;
