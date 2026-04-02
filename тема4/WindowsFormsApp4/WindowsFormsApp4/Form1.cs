@@ -85,5 +85,10 @@ namespace WindowsFormsApp4
             if (tabControl1.SelectedTab == tabPage2) UpdateTable();
             if (tabControl1.SelectedTab == tabPage3) myData.Diagram(chart1);
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            //привет
+        }
     }
 }
